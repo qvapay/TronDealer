@@ -1,0 +1,12 @@
+executionPrerequisite: >-
+  Continues from store-preview-02-amount: the charge keypad showing 24.50 USD
+  on the TRON tab, ready to generate.
+steps:
+  - tap: { x: 0.5, y: 0.927 }
+  - await:
+      visible:
+        text: ESPERANDO DEPÓSITO
+  - await:
+      idle: true
+  - echo: Hold on the QR — this is the payoff frame of the story.
+  - wait: 2500

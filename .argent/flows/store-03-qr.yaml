@@ -1,0 +1,34 @@
+executionPrerequisite: >-
+  Signed in. Repeats the keypad entry from store-02-charge because
+  restart-app clears the in-progress charge.
+steps:
+  - tool: restart-app
+    args:
+      bundleId: com.trondealer.app
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - tap:
+      text: COBRAR
+  - await:
+      visible:
+        text: IMPORTE EN USD
+  - tap: { x: 0.500, y: 0.6315 }
+  - wait: 350
+  - tap: { x: 0.189, y: 0.7055 }
+  - wait: 350
+  - tap: { x: 0.189, y: 0.8515 }
+  - wait: 350
+  - tap: { x: 0.500, y: 0.7055 }
+  - wait: 350
+  - tap: { x: 0.500, y: 0.8515 }
+  - await:
+      visible:
+        text: "≈ 24.50 USDT"
+  - echo: The primary CTA is pinned to the bottom of the screen; its label carries the selected network ("Generar cobro · USDT TRON") so it is tapped by position instead.
+  - tap: { x: 0.5, y: 0.927 }
+  - await:
+      visible:
+        text: ESPERANDO DEPÓSITO
+  - await:
+      idle: true

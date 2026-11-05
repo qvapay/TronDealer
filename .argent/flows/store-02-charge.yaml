@@ -1,0 +1,31 @@
+executionPrerequisite: >-
+  Signed in from store-01-home. restart-app resets expo-router to the tabs
+  without clearing the keychain, so the session survives.
+steps:
+  - tool: restart-app
+    args:
+      bundleId: com.trondealer.app
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - tap:
+      text: COBRAR
+  - await:
+      visible:
+        text: IMPORTE EN USD
+  - echo: Keypad keys are unlabeled in the AX tree beyond their digit, and "0" also matches the amount display, so digits are tapped by position. Row centres y = .6315 / .7055 / .7785 / .8515, column centres x = .189 / .500 / .811.
+  - echo: The app drops keypad taps sent back to back — each digit needs a pause.
+  - tap: { x: 0.500, y: 0.6315 }
+  - wait: 350
+  - tap: { x: 0.189, y: 0.7055 }
+  - wait: 350
+  - tap: { x: 0.189, y: 0.8515 }
+  - wait: 350
+  - tap: { x: 0.500, y: 0.7055 }
+  - wait: 350
+  - tap: { x: 0.500, y: 0.8515 }
+  - await:
+      visible:
+        text: "≈ 24.50 USDT"
+  - await:
+      idle: true

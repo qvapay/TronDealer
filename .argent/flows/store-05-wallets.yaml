@@ -1,0 +1,16 @@
+executionPrerequisite: >-
+  Signed in. restart-app returns to the tabs from wherever the previous flow left off.
+steps:
+  - tool: restart-app
+    args:
+      bundleId: com.trondealer.app
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - tap:
+      text: WALLETS
+  - await:
+      visible:
+        text: "EVM · 7 REDES"
+  - await:
+      idle: true

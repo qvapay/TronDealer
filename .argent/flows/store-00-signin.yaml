@@ -1,0 +1,44 @@
+# App Store tile 1 — home. This is the only flow that signs in: goldie
+# reinstalls the app once at the start of `capture`, so it lands on the login
+# screen here and every later flow inherits the session.
+# The API key never appears in this file. argent resolves
+# {{secret:TRONDEALER_API_KEY}} on the tool-server (.argent/secrets.env, gitignored).
+steps:
+  - launch: com.trondealer.app
+  - await:
+      visible:
+        text: Entra a tu negocio
+  - echo: The API key field has no accessibility id (the app sets no testIDs), so it is tapped by position — the single input under the subtitle, 57% down a login screen with no keyboard up.
+  - tap:
+      x: 0.5
+      y: 0.573
+  - echo: paste, not keyboard — typing the key on the Spanish layout mangles the underscore in "td_" and the backend rejects it.
+  - tool: paste
+    args:
+      text: "{{secret:TRONDEALER_API_KEY}}"
+  - await:
+      visible:
+        text: Permitir pegar
+  - tap:
+      text: Permitir pegar
+  - tap:
+      text: Entrar
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - await:
+      idle: true
+  - echo: Open the paid route once so SpringBoard's "¿Abrir en TronDealer?" prompt is answered here, and store-04-paid can deep-link straight through on every later capture.
+  - tool: open-url
+    args:
+      url: "trondealer://charge/paid?address=TYZ3Vs8QV8iHxSaJ8v8mxzh7cEkYTThn6B&walletLabel=barra&txKey=warmup&txHash=warmup&amount=8&asset=USDT&status=swept&confirmations=19&chain=tron&networkKey=tron&networkLabel=TRON&minConfs=19"
+  - await:
+      visible:
+        text: Abrir
+  - tap:
+      text: Abrir
+  - await:
+      visible:
+        text: Pago confirmado
+  - await:
+      idle: true

@@ -1,0 +1,56 @@
+{
+	"expo": {
+		"name": "TronDealer",
+		"slug": "trondealer",
+		"version": "1.1.6",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"scheme": "trondealer",
+		"userInterfaceStyle": "dark",
+		"backgroundColor": "#0C0C0B",
+		"ios": {
+			"bundleIdentifier": "com.trondealer.app",
+			"supportsTablet": false,
+			"buildNumber": "116"
+		},
+		"android": {
+			"package": "com.trondealer",
+			"adaptiveIcon": {
+				"backgroundColor": "#0C0C0B",
+				"foregroundImage": "./assets/images/android-icon-foreground.png",
+				"monochromeImage": "./assets/images/android-icon-monochrome.png"
+			},
+			"predictiveBackGestureEnabled": false,
+			"versionCode": 116
+		},
+		"web": {
+			"output": "static",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": [
+			"expo-router",
+			"expo-secure-store",
+			"expo-localization",
+			[
+				"onesignal-expo-plugin",
+				{
+					"mode": "production"
+				}
+			],
+			[
+				"expo-splash-screen",
+				{
+					"backgroundColor": "#0C0C0B",
+					"image": "./assets/images/splash-icon.png",
+					"imageWidth": 76
+				}
+			],
+			"expo-image",
+			"expo-web-browser"
+		],
+		"experiments": {
+			"typedRoutes": true,
+			"reactCompiler": true
+		}
+	}
+}

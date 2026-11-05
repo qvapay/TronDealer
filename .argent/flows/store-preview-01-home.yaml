@@ -1,0 +1,12 @@
+executionPrerequisite: >-
+  goldie restarts the app before the first segment, so this starts signed in and
+  settled on the home tab. No launch step, and no sign-in: the preview video
+  must read as a plain screen recording of the product.
+steps:
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - await:
+      idle: true
+  - echo: Let the volume and the recent-activity list read before anything moves.
+  - wait: 3000

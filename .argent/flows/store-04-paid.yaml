@@ -1,0 +1,20 @@
+executionPrerequisite: >-
+  Signed in. Opens the confirmed-payment screen straight from its route, since
+  reaching it the normal way would need a real deposit to land mid-capture.
+steps:
+  - tool: restart-app
+    args:
+      bundleId: com.trondealer.app
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - echo: The params are a real settled deposit on this account (8 USDT to the "barra" TRON wallet, tx 9e6a5093…560b, 19/19 confirmations) so the screen shows genuine on-chain data, not invented figures.
+  - tool: open-url
+    args:
+      url: "trondealer://charge/paid?address=TYZ3Vs8QV8iHxSaJ8v8mxzh7cEkYTThn6B&walletLabel=barra&txKey=9e6a5093e5c826d6bd368597acd3545a1127de5ed470cf7148d9c9d37988560b:11&txHash=9e6a5093e5c826d6bd368597acd3545a1127de5ed470cf7148d9c9d37988560b&amount=8&asset=USDT&status=swept&confirmations=19&chain=tron&networkKey=tron&networkLabel=TRON&minConfs=19"
+  - echo: No confirmation step here — SpringBoard only asks "¿Abrir en TronDealer?" the first time a URL is handed to the app on a device, and store-00-signin absorbs that one time.
+  - await:
+      visible:
+        text: Pago confirmado
+  - await:
+      idle: true

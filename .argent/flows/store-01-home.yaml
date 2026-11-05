@@ -1,0 +1,19 @@
+# App Store tile 1 — home.
+#
+# Signing in is NOT part of this flow: reinstalling the app on the simulator
+# leaves the keychain intact, so the session store-00-signin created survives
+# every `goldie capture`. Run `argent flow run store-00-signin` by hand once on
+# a simulator with an empty keychain (a fresh device, or after `simctl erase`),
+# then capture as normal.
+executionPrerequisite: >-
+  Signed in — see store-00-signin. restart-app resets expo-router to the tabs
+  without touching the keychain.
+steps:
+  - tool: restart-app
+    args:
+      bundleId: com.trondealer.app
+  - await:
+      visible:
+        text: VOLUMEN RECIBIDO
+  - await:
+      idle: true

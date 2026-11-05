@@ -1,0 +1,22 @@
+executionPrerequisite: >-
+  Continues from store-preview-01-home: signed in, on the home tab, idle.
+steps:
+  - tap:
+      text: COBRAR
+  - await:
+      visible:
+        text: IMPORTE EN USD
+  - wait: 900
+  - tap: { x: 0.500, y: 0.6315 }
+  - wait: 450
+  - tap: { x: 0.189, y: 0.7055 }
+  - wait: 450
+  - tap: { x: 0.189, y: 0.8515 }
+  - wait: 450
+  - tap: { x: 0.500, y: 0.7055 }
+  - wait: 450
+  - tap: { x: 0.500, y: 0.8515 }
+  - await:
+      visible:
+        text: "≈ 24.50 USDT"
+  - wait: 1200
