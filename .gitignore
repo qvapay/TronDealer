@@ -51,8 +51,3 @@ dist/
 .argent/secrets.env
 .argent/.server/
 goldie/out/
-
-# internal notes, not part of the public repo
-/plan.md
-/docs/seo-web-plan.md
-/docs/store-listing.md
