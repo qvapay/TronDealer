@@ -11,7 +11,6 @@ import { Body, Card, Chip, Disp, Eyebrow, Mono, Row, Screen, StatusDot } from '.
 import { appLocale, t } from '../../i18n'
 import { shortAddress } from '../../lib/chains'
 import { authenticateBiometric, biometricsAvailable, isLockEnabled, setLockEnabled } from '../../lib/biometrics'
-import { disablePush, enablePush, isPushOptedIn, pushAvailable } from '../../lib/push'
 import { colors, fonts, radius } from '../../theme/tokens'
 
 const SWEEP_FIELDS = [
@@ -60,12 +59,10 @@ export default function Settings() {
 	const rotateKey = useRotateKey()
 	const { updateApiKey } = useSession()
 	const [sheet, setSheet] = useState<EditSheetConfig | null>(null)
-	const [pushOn, setPushOn] = useState(false)
 	const [bioAvailable, setBioAvailable] = useState(false)
 	const [bioOn, setBioOn] = useState(false)
 
 	useEffect(() => {
-		isPushOptedIn().then(setPushOn)
 		biometricsAvailable().then(setBioAvailable)
 		isLockEnabled().then(setBioOn)
 	}, [])
@@ -102,16 +99,6 @@ export default function Settings() {
 					}),
 			},
 		])
-	}
-
-	async function togglePush(value: boolean) {
-		if (value) {
-			const granted = await enablePush()
-			setPushOn(granted)
-		} else {
-			disablePush()
-			setPushOn(false)
-		}
 	}
 
 	const client = me.data
@@ -297,18 +284,6 @@ export default function Settings() {
 
 				<Eyebrow style={styles.sectionTitle}>{t('settings.notifications')}</Eyebrow>
 				<Card style={styles.section}>
-					<SettingRow
-						label={pushAvailable ? t('settings.push') : `${t('settings.push')} (${t('settings.pushNeedsBuild')})`}
-						right={
-							<Switch
-								value={pushOn}
-								disabled={!pushAvailable}
-								onValueChange={togglePush}
-								trackColor={{ false: colors.ink2, true: colors.signal }}
-								thumbColor={colors.bone}
-							/>
-						}
-					/>
 					<SettingRow
 						label={t('settings.confUpdates')}
 						last

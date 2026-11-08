@@ -33,8 +33,8 @@ Store releases are local (`scripts/release.sh`, no EAS). Secrets in `.env.releas
 
 ## Backend constraints to remember
 
-- Push runs through OneSignal (`src/lib/push.ts`, no-op in Expo Go; external id = client_id, sent by the backend's `/api/v2/push/notify` cron). The POS `qr` screen still POLLS the chain's transactions endpoint every 4 s for in-screen detection.
+- There is no push: OneSignal was removed on 2026-11-07. `ios/` is generated and untracked, so a copy made before that date still carries the OneSignal extension target; regenerate it with `npx expo prebuild --clean --platform ios` (iOS only: the Android upload keystore lives in `android/app/`). The POS `qr` screen POLLS the chain's transactions endpoint every 4 s for in-screen detection.
 - Deposits under 0.50 USDT are dust-filtered server-side — `MIN_CHARGE_USD` in `charge/index.tsx` guards this.
 - `clients/me/wallets/assign` label is an idempotency key (same label → same wallet). Cap is **100 ACTIVE wallets per subsystem** (EVM counts as one across its 7 chains) → HTTP 429; inactive ones don't count. `PATCH clients/me/{chain}/wallets/:id` takes `label` (≤50, unique per client → 409; `null`/`""` clears) and/or `status` (`active`|`inactive`; reactivating rescans the inactive window best-effort, 429 past the cap). Backend auto-deactivates after 120 idle days (7 for unfunded `single_use`). No wallet delete. The `single_use` flag is NOT available on the `me/*` assign routes.
 - `me/recent`/`me/timeseries` omit TON; `me/search` omits BTC/LTC/TON. Only `me/stats` covers all 7 subsystems.
-- Settings rows for push, Face ID and API-key rotation are disabled placeholders until the backend ships them.
+- Settings rows for Face ID and API-key rotation are disabled placeholders until the backend ships them.

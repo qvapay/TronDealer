@@ -3,7 +3,6 @@ import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, 
 
 import { api, setApiKey } from '../api/client'
 import type { Client } from '../api/hooks'
-import { pushLogin, pushLogout } from '../lib/push'
 
 const KEY_API = 'td_api_key'
 const KEY_NAME = 'td_client_name'
@@ -36,7 +35,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 				if (key && id) {
 					setApiKey(key)
 					setSession({ clientId: id, name: name ?? '' })
-					pushLogin(id)
 				}
 			} finally {
 				setLoading(false)
@@ -56,7 +54,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 				SecureStore.setItemAsync(KEY_ID, client.id),
 			])
 			setSession({ clientId: client.id, name: client.name ?? '' })
-			pushLogin(client.id)
 			return client
 		} catch (e) {
 			setApiKey(null)
@@ -72,7 +69,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 		])
 		setApiKey(null)
 		setSession(null)
-		pushLogout()
 	}, [])
 
 	// After a key rotation: swap the credential in place, session stays alive.
