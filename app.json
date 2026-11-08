@@ -32,12 +32,6 @@
 			"expo-secure-store",
 			"expo-localization",
 			[
-				"onesignal-expo-plugin",
-				{
-					"mode": "production"
-				}
-			],
-			[
 				"expo-splash-screen",
 				{
 					"backgroundColor": "#0C0C0B",

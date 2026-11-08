@@ -40,7 +40,7 @@ fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n')
 const sub = (f, pairs) => { if (!fs.existsSync(f)) return; let s = fs.readFileSync(f, 'utf8'); for (const [re, to] of pairs) s = s.replace(re, to); fs.writeFileSync(f, s) }
 sub('android/app/build.gradle', [[/versionCode \d+/, `versionCode ${b}`], [/versionName "[^"]+"/, `versionName "${v}"`]])
 sub('ios/TronDealer.xcodeproj/project.pbxproj', [[/CURRENT_PROJECT_VERSION = [\d.]+;/g, `CURRENT_PROJECT_VERSION = ${b};`], [/MARKETING_VERSION = [\d.]+;/g, `MARKETING_VERSION = ${v};`]])
-for (const f of ['ios/TronDealer/Info.plist', 'ios/OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension-Info.plist'])
+for (const f of ['ios/TronDealer/Info.plist'])
 	sub(f, [[/(<key>CFBundleShortVersionString<\/key>\s*<string>)[^<]+/, `$1${v}`], [/(<key>CFBundleVersion<\/key>\s*<string>)[^<]+/, `$1${b}`]])
 console.log(`bumped to ${v} (${b})`)
 EOF

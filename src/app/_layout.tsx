@@ -14,11 +14,9 @@ import { View } from 'react-native'
 
 import { SessionProvider, useSession } from '../auth/session'
 import { AppLock } from '../components/app-lock'
-import { initPush, onNotificationClick } from '../lib/push'
 import { colors } from '../theme/tokens'
 
 SplashScreen.preventAutoHideAsync()
-initPush()
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -32,27 +30,6 @@ function AuthGate({ fontsLoaded }: { fontsLoaded: boolean }) {
 	const router = useRouter()
 
 	const ready = fontsLoaded && !loading
-
-	// Tapping a deposit push opens the tx detail (payload from the backend push cron).
-	useEffect(() => {
-		return onNotificationClick((data) => {
-			if (data.type === 'tx' && data.tx_hash) {
-				router.push({
-					pathname: '/tx/[hash]',
-					params: {
-						hash: data.tx_hash,
-						network: data.network ?? '',
-						asset: data.asset ?? '',
-						amount: data.amount ?? '',
-						status: data.status ?? '',
-						created_at: '',
-						wallet_address: data.wallet_address ?? '',
-						wallet_label: data.wallet_label ?? '',
-					},
-				})
-			}
-		})
-	}, [router])
 
 	useEffect(() => {
 		if (!ready) return
